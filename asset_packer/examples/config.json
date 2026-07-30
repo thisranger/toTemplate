@@ -1,0 +1,23 @@
+{
+    "images": [
+        {
+            "name": "file",
+            "path": "./file.png",
+            "format": "mono"
+        },
+        {
+            "name": "dir_image",
+            "path": "./image/dir.png",
+            "format": "rgba8888"
+        }
+    ],
+    "animations": [
+        {
+            "name": "test_anim",
+            "millisPerFrame": 200,
+            "autoStart": true,
+            "repeat": true,
+            "frames": ["file", "dir_image"]
+        }
+    ]
+}

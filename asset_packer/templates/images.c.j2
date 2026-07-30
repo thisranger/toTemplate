@@ -1,0 +1,39 @@
+#include "images.h"
+#include <stddef.h>
+
+static const uint8_t asset_bitmap[] = {
+{% for i in range(0, bitmap|length, 16) %}
+    {{ bitmap[i:i+16] | join(", ") }},
+{% endfor %}
+};
+
+{% for image in images %}
+icon_t IMAGE_{{ image.name }} = {
+    .width = {{ image.width }},
+    .height = {{ image.height }},
+    .data = (void*)asset_bitmap,
+    .offset = {{ image.offset }},
+    .flags = {
+        .colored = {{ image.colored | lower }},
+        .alpha = {{ image.alpha | lower }},
+    }
+};
+{% endfor %}
+
+{% for anim in animations %}
+static icon_t* ANIM_{{ anim.name }}_frames[] = {
+{% for frame in anim.frames %}
+    &IMAGE_{{ frame.name }},
+{% endfor %}
+};
+
+animatedIcon_t ANIM_{{ anim.name }} = {
+    .millisPerFrame = {{ anim.millis_per_frame }},
+    .flags = {
+        .autoStart = {{ anim.auto_start | lower }},
+        .repeat = {{ anim.repeat | lower }}
+    },
+    .amountOfFrames = {{ anim.amount_of_frames }},
+    .frames = (icon_t*)ANIM_{{ anim.name }}_frames
+};
+{% endfor %}
