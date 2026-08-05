@@ -42,10 +42,10 @@ class MonoPacker(ImagePacker):
         #         bitOffset += 1
         #         ...
         
-        for x in range(width):
-            for y in range(height):
+        for y in range(height):
+            for x in range(width):
                 if pixels[y, x] == 0:  # Black pixel
-                    current_byte |= (1 << (7 - bit_offset))
+                    current_byte |= (1 << bit_offset)
                 bit_offset += 1
                 if bit_offset == 8:
                     bitmap.append(current_byte)
